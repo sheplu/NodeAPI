@@ -17,6 +17,16 @@ router.get('/new', function(req, res, next) {
   res.send('create user');
 });
 
+router.post('/newPOST', function(req, res, next) {
+  	new User({
+  		firstname: req.body.firstname,
+  		lastname: req.body.lastname,
+  		mail: req.body.mail
+  	}).save();
+
+  res.send('create POST user');
+});
+
 // http://localhost:3000/users/newGET
 //?firstname=Bob&lastname=Dylan&mail=bd@gmail.com
 router.get('/newGET', function(req, res, next) {
@@ -27,7 +37,7 @@ router.get('/newGET', function(req, res, next) {
   		mail: req.query.mail
   	}).save();
 
-  res.send('create user');
+  res.send('create GET user');
 });
 
 module.exports = router;
