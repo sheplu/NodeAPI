@@ -17,6 +17,15 @@ router.get('/new', function(req, res, next) {
   res.send('create user');
 });
 
+router.get('/all', function(req, res, next) {
+  User.find({}, function(err, users) {
+  		if(err) throw err;
+  		res.json(users);
+  });
+
+  //res.send('create FIND user');
+});
+
 router.post('/newPOST', function(req, res, next) {
   	new User({
   		firstname: req.body.firstname,
