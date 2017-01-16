@@ -22,8 +22,13 @@ router.get('/all', function(req, res, next) {
   		if(err) throw err;
   		res.json(users);
   });
+});
 
-  //res.send('create FIND user');
+router.get('/one', function(req, res, next) {
+  User.find({firstname: "Jean"}, function(err, users) {
+  		if(err) throw err;
+  		res.json(users);
+  });
 });
 
 router.post('/newPOST', function(req, res, next) {
