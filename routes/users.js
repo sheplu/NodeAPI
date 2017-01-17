@@ -9,8 +9,13 @@ router.all('/*', function(req, res, next) {
 	console.log("catch all");
 	count++;
 	console.log(count);
-	//req.body.firstname = "azertyuiop";
-	next();
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if (token == "admin") {
+		next();
+	}
+	else {
+		res.json({message: 'Authentificate'});
+	}
 });
 
 /* GET users listing. */
