@@ -17,10 +17,24 @@ router.post('/register', function(req, res, next) {
   		password: crypto.createHmac('sha1', 'test').update(req.body.password).digest('hex')
   	}).save(function(err, user) {
   		if (err) {
-  			res.json("error");
+  			res.json(err);
   		}
   		res.json(user)
   	});
+});
+
+//LOGIN
+router.post('/login', function(req, res, next) {
+  	User.findOne({
+  		mail: req.body.mail,
+  		password: crypto.createHmac('sha1', 'test').update(req.body.password).digest('hex')
+  	}).exec( function(err, user) {
+  		if (err) {
+  			res.json(err);
+  		}
+  		
+  		res.json(user);
+  	})
 });
 
 router.get('/new', function(req, res, next) {
