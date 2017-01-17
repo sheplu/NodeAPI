@@ -3,6 +3,16 @@ var router = express.Router();
 var User = require('../models/user');
 var crypto = require('crypto');
 
+var count = 0;
+
+router.all('/*', function(req, res, next) {
+	console.log("catch all");
+	count++;
+	console.log(count);
+	//req.body.firstname = "azertyuiop";
+	next();
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -68,15 +78,12 @@ router.delete('/:mail', function(req, res, next) {
 });
 
 // Update user
-router.put('/update', function(req, res, next) {
+router.patch('/update', function(req, res, next) {
 	User.findOneAndUpdate({
 		mail: req.body.mail
 	}, 
 	{
-		$set:
-		{
-			firstname: req.body.firstname
-		}
+		$set: req.body
 	}, 
 	{
 		new: true
