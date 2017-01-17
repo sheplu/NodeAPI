@@ -8,10 +8,6 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/:id', function(req, res, next) {
-	res.send('value' + req.params.id);
-});
-
 // REGISTER
 router.post('/register', function(req, res, next) {
   	new User({
@@ -45,6 +41,31 @@ router.post('/login', function(req, res, next) {
   	})
 });
 
+// list all users
+router.get('/all', function(req, res, next) {
+  User.find({}, function(err, users) {
+  		if(err) throw err;
+  		res.json(users);
+  });
+});
+
+// list selected users with mail 
+router.get('/:mail', function(req, res, next) {
+  User.find({mail: req.params.mail}, function(err, users) {
+  		if(err) throw err;
+  		res.json(users);
+  });
+});
+
+// find one user an remove 
+router.delete('/:mail', function(req, res, next) {
+	User.findOneAndRemove({mail: req.params.mail}, function(err, user) {
+		if(err) {
+			res.json(err);
+		}
+		res.json({message: "Delete"});
+	})
+})
 router.get('/new', function(req, res, next) {
   	new User({
   		firstname: "Jean",
@@ -53,13 +74,6 @@ router.get('/new', function(req, res, next) {
   	}).save();
 
   res.send('create user');
-});
-
-router.get('/all', function(req, res, next) {
-  User.find({}, function(err, users) {
-  		if(err) throw err;
-  		res.json(users);
-  });
 });
 
 router.get('/one', function(req, res, next) {
