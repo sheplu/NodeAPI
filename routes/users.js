@@ -65,7 +65,31 @@ router.delete('/:mail', function(req, res, next) {
 		}
 		res.json({message: "Delete"});
 	})
-})
+});
+
+// Update user
+router.put('/update', function(req, res, next) {
+	User.findOneAndUpdate({
+		mail: req.body.mail
+	}, 
+	{
+		$set:
+		{
+			firstname: req.body.firstname
+		}
+	}, 
+	{
+		new: true
+	}, 
+	function(err, user) {
+		if (err) {
+			res.json(err)
+		}
+		res.json(user);
+	});
+});
+
+
 router.get('/new', function(req, res, next) {
   	new User({
   		firstname: "Jean",
