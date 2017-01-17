@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var crypto = require('crypto');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,7 +14,7 @@ router.post('/register', function(req, res, next) {
   		firstname: req.body.firstname,
   		lastname: req.body.lastname,
   		mail: req.body.mail,
-  		password: req.body.password
+  		password: crypto.createHmac('sha1', 'test').update(req.body.password).digest('hex')
   	}).save(function(err, user) {
   		if (err) {
   			res.json("error");
