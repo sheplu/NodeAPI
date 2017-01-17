@@ -32,8 +32,12 @@ router.post('/login', function(req, res, next) {
   		if (err) {
   			res.json(err);
   		}
-  		
-  		res.json(user);
+  		if (user) {
+  			res.json(user);
+  		}
+  		else {
+  			res.json("No user");
+  		}
   	})
 });
 
