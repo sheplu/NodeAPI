@@ -8,13 +8,17 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/:id', function(req, res, next) {
+	res.send('value' + req.params.id);
+});
+
 // REGISTER
 router.post('/register', function(req, res, next) {
   	new User({
   		firstname: req.body.firstname,
   		lastname: req.body.lastname,
   		mail: req.body.mail,
-  		password: crypto.createHmac('sha1', 'test').update(req.body.password).digest('hex')
+  		password: crypto.createHmac('sha256', 'test').update(req.body.password).digest('hex')
   	}).save(function(err, user) {
   		if (err) {
   			res.json(err);
@@ -27,7 +31,7 @@ router.post('/register', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   	User.findOne({
   		mail: req.body.mail,
-  		password: crypto.createHmac('sha1', 'test').update(req.body.password).digest('hex')
+  		password: crypto.createHmac('sha256', 'test').update(req.body.password).digest('hex')
   	}).exec( function(err, user) {
   		if (err) {
   			res.json(err);
