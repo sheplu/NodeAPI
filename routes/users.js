@@ -7,6 +7,21 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+// REGISTER
+router.post('/register', function(req, res, next) {
+  	new User({
+  		firstname: req.body.firstname,
+  		lastname: req.body.lastname,
+  		mail: req.body.mail,
+  		password: req.body.password
+  	}).save(function(err, user) {
+  		if (err) {
+  			res.json("error");
+  		}
+  		res.json(user)
+  	});
+});
+
 router.get('/new', function(req, res, next) {
   	new User({
   		firstname: "Jean",
