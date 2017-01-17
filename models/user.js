@@ -6,7 +6,6 @@ var User = new Schema({
 		lastname: String,
 		mail: {
 			type: String,
-			index: true,
 			unique: true
 		},
 		password: String
