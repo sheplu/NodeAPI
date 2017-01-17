@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var crypto = require('crypto');
+var passport = require('passport');
+var verify = require('./verify');
 
 var count = 0;
 
@@ -15,6 +17,16 @@ router.all('/*', function(req, res, next) {
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
+});
+
+//LOGIN PASSPORT
+router.post('/loginP', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      req.logIn(user, function(err) {
+        var token = verify.getToken(user);
+        res.json(token);
+      });
+    })(req, res, next);
 });
 
 // REGISTER
@@ -51,7 +63,7 @@ router.post('/login', function(req, res, next) {
 });
 
 // list all users
-router.get('/all', function(req, res, next) {
+router.get('/all', verify.verifyUser, function(req, res, next) {
   User.find({}, function(err, users) {
   		if(err) throw err;
   		res.json(users);
