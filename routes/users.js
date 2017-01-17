@@ -9,13 +9,7 @@ router.all('/*', function(req, res, next) {
 	console.log("catch all");
 	count++;
 	console.log(count);
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	if (token == "admin") {
-		next();
-	}
-	else {
-		res.json({message: 'Authentificate'});
-	}
+	next();
 });
 
 /* GET users listing. */
