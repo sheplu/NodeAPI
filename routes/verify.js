@@ -11,10 +11,9 @@ exports.verifyUser = function(req, res, next) {
 	if (token) {
 		jwt.verify(token, config.secretKey, function(err, decoded) {
 			if(err) {
-				res.json("error");
+				res.json(err);
 			}
 			else {
-				console.log(decoded);
 				req.decoded = decoded;
 				next();
 			}

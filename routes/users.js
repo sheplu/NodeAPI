@@ -7,11 +7,13 @@ var verify = require('./verify');
 
 var count = 0;
 
-router.all('/*', function(req, res, next) {
-	console.log("catch all");
-	count++;
-	console.log(count);
-	next();
+router.all('/*', verify.verifyUser, function(req, res, next) {
+	if(req.decoded._doc.isAdmin) {
+    next();
+  }
+  else {
+    res.json("error auth");
+  }
 });
 
 /* GET users listing. */
@@ -36,6 +38,7 @@ router.post('/registerP', function(req, res, next){
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       mail: req.body.mail,
+      isAdmin: req.body.isadmin
     }), 
     req.body.password, 
     function(err, user) {
@@ -82,7 +85,7 @@ router.post('/login', function(req, res, next) {
 
 // list all users
 router.get('/all', verify.verifyUser, function(req, res, next) {
-  if(req.decoded._doc.firstname == "Jean") {
+  if(req.decoded._doc.isAdmin) {
     User.find({}, function(err, users) {
       if(err) res.json(err);
       res.json(users);
