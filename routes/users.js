@@ -24,8 +24,8 @@ router.post('/loginP', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       req.logIn(user, function(err) {
         var token = verify.getToken(user);
-        console.log(req.decoded);
         res.json(token);
+        res.json()
       });
     })(req, res, next);
 });
@@ -42,7 +42,7 @@ router.post('/registerP', function(req, res, next){
       if(err) {
         res.json(err);
       }
-      res.json(user);
+      res.json("user"+user);
     }
   );
 });
@@ -82,10 +82,16 @@ router.post('/login', function(req, res, next) {
 
 // list all users
 router.get('/all', verify.verifyUser, function(req, res, next) {
-  User.find({}, function(err, users) {
-  		if(err) res.json(err);
-  		res.json(users);
-  });
+  if(req.decoded._doc.firstname == "Jean") {
+    User.find({}, function(err, users) {
+      if(err) res.json(err);
+      res.json(users);
+    });
+  }
+  else {
+    res.json({message: "not auth"});
+  }
+  
 });
 
 // list selected users with mail 

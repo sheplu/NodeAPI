@@ -7,7 +7,6 @@ exports.getToken = function(user) {
 };
 
 exports.verifyUser = function(req, res, next) {
-	console.log("test");
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 	if (token) {
 		jwt.verify(token, config.secretKey, function(err, decoded) {
@@ -15,7 +14,7 @@ exports.verifyUser = function(req, res, next) {
 				res.json("error");
 			}
 			else {
-				console.log("decoded" + decoded);
+				console.log(decoded);
 				req.decoded = decoded;
 				next();
 			}
