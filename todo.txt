@@ -22,3 +22,4 @@ Projet
 	- lister tous les formateurs
 	- modifiers les informations de tous les utilisateurs (étudiant, formateur et administrateur)
 
+* Un utilisateur non inscrit & connecté ne peut que s'enregistrer et se connecter.
