@@ -24,9 +24,27 @@ router.post('/loginP', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       req.logIn(user, function(err) {
         var token = verify.getToken(user);
+        console.log(req.decoded);
         res.json(token);
       });
     })(req, res, next);
+});
+
+router.post('/registerP', function(req, res, next){
+  User.register(new User({
+      username: req.body.username,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      mail: req.body.mail,
+    }), 
+    req.body.password, 
+    function(err, user) {
+      if(err) {
+        res.json(err);
+      }
+      res.json(user);
+    }
+  );
 });
 
 // REGISTER
@@ -65,7 +83,7 @@ router.post('/login', function(req, res, next) {
 // list all users
 router.get('/all', verify.verifyUser, function(req, res, next) {
   User.find({}, function(err, users) {
-  		if(err) throw err;
+  		if(err) res.json(err);
   		res.json(users);
   });
 });

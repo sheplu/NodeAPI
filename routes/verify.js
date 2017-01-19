@@ -15,9 +15,13 @@ exports.verifyUser = function(req, res, next) {
 				res.json("error");
 			}
 			else {
+				console.log("decoded" + decoded);
 				req.decoded = decoded;
 				next();
 			}
 		})
+	}
+	else {
+		res.json({message: "no token"});
 	}
 };
