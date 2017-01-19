@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
-var crypto = require('crypto');
 var passport = require('passport');
 var verify = require('./verify');
 
@@ -21,70 +20,8 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-//LOGIN PASSPORT
-router.post('/loginP', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-      req.logIn(user, function(err) {
-        var token = verify.getToken(user);
-        res.json(token);
-        res.json()
-      });
-    })(req, res, next);
-});
-
-router.post('/registerP', function(req, res, next){
-  User.register(new User({
-      username: req.body.username,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      mail: req.body.mail,
-      isAdmin: req.body.isadmin
-    }), 
-    req.body.password, 
-    function(err, user) {
-      if(err) {
-        res.json(err);
-      }
-      res.json("user"+user);
-    }
-  );
-});
-
-// REGISTER
-router.post('/register', function(req, res, next) {
-  	new User({
-  		firstname: req.body.firstname,
-  		lastname: req.body.lastname,
-  		mail: req.body.mail,
-  		password: crypto.createHmac('sha256', 'test').update(req.body.password).digest('hex')
-  	}).save(function(err, user) {
-  		if (err) {
-  			res.json(err);
-  		}
-  		res.json(user)
-  	});
-});
-
-//LOGIN
-router.post('/login', function(req, res, next) {
-  	User.findOne({
-  		mail: req.body.mail,
-  		password: crypto.createHmac('sha256', 'test').update(req.body.password).digest('hex')
-  	}).exec( function(err, user) {
-  		if (err) {
-  			res.json(err);
-  		}
-  		if (user) {
-  			res.json(user);
-  		}
-  		else {
-  			res.json("No user");
-  		}
-  	})
-});
-
 // list all users
-router.get('/all', verify.verifyUser, function(req, res, next) {
+router.get('/all', function(req, res, next) {
   if(req.decoded._doc.isAdmin) {
     User.find({}, function(err, users) {
       if(err) res.json(err);
@@ -94,7 +31,6 @@ router.get('/all', verify.verifyUser, function(req, res, next) {
   else {
     res.json({message: "not auth"});
   }
-  
 });
 
 // list selected users with mail 
@@ -132,47 +68,6 @@ router.patch('/update', function(req, res, next) {
 		}
 		res.json(user);
 	});
-});
-
-
-router.get('/new', function(req, res, next) {
-  	new User({
-  		firstname: "Jean",
-  		lastname: "Burellier",
-  		mail: "aa@bb.cc"
-  	}).save();
-
-  res.send('create user');
-});
-
-router.get('/one', function(req, res, next) {
-  User.find({firstname: "Jean"}, function(err, users) {
-  		if(err) throw err;
-  		res.json(users);
-  });
-});
-
-router.post('/newPOST', function(req, res, next) {
-  	new User({
-  		firstname: req.body.firstname,
-  		lastname: req.body.lastname,
-  		mail: req.body.mail
-  	}).save();
-
-  res.send('create POST user');
-});
-
-// http://localhost:3000/users/newGET
-//?firstname=Bob&lastname=Dylan&mail=bd@gmail.com
-router.get('/newGET', function(req, res, next) {
-	console.log("query" + req.query.firstname);
-  	new User({
-  		firstname: req.query.firstname,
-  		lastname: req.query.lastname,
-  		mail: req.query.mail
-  	}).save();
-
-  res.send('create GET user');
 });
 
 module.exports = router;
