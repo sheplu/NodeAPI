@@ -15,6 +15,11 @@ router.all('/*', verify.verifyUser, function(req, res, next) {
   }
 });
 
+router.get('/test', function(req, res, next) {
+  console.log("test user");
+  res.render('user/test', { title: 'Express' });
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -53,7 +58,8 @@ router.delete('/:mail', function(req, res, next) {
 
 // Update user
 router.patch('/update', function(req, res, next) {
-	User.findOneAndUpdate({
+	
+  User.findOneAndUpdate({
 		mail: req.body.mail
 	}, 
 	{

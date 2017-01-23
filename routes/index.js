@@ -9,11 +9,17 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/test', function(req, res, next) {
+  console.log("test");
+  res.render('user/test', { title: 'Express' });
+});
+
 // LOGIN PASSPORT
 router.post('/loginP', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       req.logIn(user, function(err) {
         var token = verify.getToken(user);
+        console.log("user"+user);
         res.json(token);
       });
     })(req, res, next);
