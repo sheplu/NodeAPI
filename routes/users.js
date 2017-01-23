@@ -7,7 +7,7 @@ var verify = require('./verify');
 var count = 0;
 
 router.all('/*', verify.verifyUser, function(req, res, next) {
-	if(req.decoded._doc.isAdmin) {
+	if(req.decoded._doc.isAdmin == "") {
     next();
   }
   else {
