@@ -1,11 +1,18 @@
+process.env.NODE_ENV = 'test';
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
+var mongoose = require('mongoose');
+
 var server = require('../app');
+var User = require('../models/user');
+
 var should = chai.should();
 
 chai.use(chaiHttp);
 
 describe('Test', function() {
+	this.timeout(5000);
 	it('should show index page / GET', function(done) {
 		chai.request(server)
 			.get('/')

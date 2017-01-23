@@ -10,7 +10,7 @@ var localStrategy = require('passport-local').Strategy;
 
 var config = require('./config');
 
-mongoose.connect('mongodb://localhost:27017/NodeAPI');
+mongoose.connect(config[process.env.NODE_ENV]);
 var db = mongoose.connection;
 db.once('open', function () {
   console.log("connected correctly to server");
