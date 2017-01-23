@@ -13,6 +13,23 @@ chai.use(chaiHttp);
 
 describe('Test', function() {
 	this.timeout(5000);
+	User.collection.drop();
+	beforeEach(function(done) {
+		var user = new User({
+			'firstname': "Jack",
+			'lastname': "Daniel",
+			"mail": "jd@gmail.com",
+			'password': "aqwzsxedc"
+		});
+		user.save(function(err) {
+			done();
+		});	
+	});
+	afterEach(function(done) {
+		User.collection.drop();
+		done();
+	})
+
 	it('should show index page / GET', function(done) {
 		chai.request(server)
 			.get('/')
