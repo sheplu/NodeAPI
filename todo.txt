@@ -1,4 +1,20 @@
-Projet
+Projet 2:
+
+* Ecrire les tests pour l'ensemble des routes déjà présentes
+
+* Créer de nouvelles routes
+	- un étudiant peut avoir des notes
+	- un formateur peut ajouter ou modifier des notes
+	- un administrateur peut supprimer des notes
+	- afficher la moyenne d'un étudiant (même coefficient pour toutes les notes)
+
+* Commencer par écrire les tests avant la conception des routes
+	- un test -> une route
+	- configurer l'intégration continue
+
+
+
+Projet 1 :
 
 * Chaque utilisateur est maintenant soit:
 	- un étudiant
