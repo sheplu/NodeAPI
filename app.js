@@ -10,6 +10,8 @@ var localStrategy = require('passport-local').Strategy;
 
 var config = require('./config');
 
+if(!process.end.NODE_ENV) process.env.NODE_ENV = 'development';
+
 mongoose.connect(config[process.env.NODE_ENV]);
 var db = mongoose.connection;
 db.once('open', function () {
