@@ -8,7 +8,7 @@ var verify = require('./verify');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
+/*
 router.get('/test', function(req, res, next) {
   console.log("test");
   res.render('user/test', { title: 'Express' });
@@ -43,5 +43,6 @@ router.post('/registerP', function(req, res, next){
     }
   );
 });
+*/
 
 module.exports = router;

@@ -4,9 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
+//var mongoose = require('mongoose');
+//var passport = require('passport');
+//var localStrategy = require('passport-local').Strategy;
 
 var config = require('./config');
 
@@ -14,15 +14,16 @@ if(!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development';
 }
 
+/*
 console.log(process.env.npm_package_name);
 mongoose.connect(config[process.env.NODE_ENV]);
 var db = mongoose.connection;
 db.once('open', function () {
   console.log("connected correctly to server");
 });
-
+*/
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 
 var app = express();
 
@@ -38,15 +39,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/*
 // passport config
 var User = require('./models/user');
 app.use(passport.initialize());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+*/
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
