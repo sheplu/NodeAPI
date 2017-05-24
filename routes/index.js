@@ -4,7 +4,7 @@ var User = require('../models/user');
 var passport = require('passport');
 var verify = require('./verify');
 
-/* GET home page. */
+/* GET home pages. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
