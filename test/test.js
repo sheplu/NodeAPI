@@ -12,7 +12,7 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 describe('Test', function() {
-	this.timeout(5000);
+	/*this.timeout(5000);
 	User.collection.drop();
 	beforeEach(function(done) {
 		var user = new User({
@@ -54,6 +54,15 @@ describe('Test', function() {
 				res.should.be.json;
 				res.body.should.be.a('object');
 				res.body.should.have.property('username');
+				done();
+			})
+	});*/
+	it('should show index page / GET', function(done) {
+		chai.request(server)
+			.get('/')
+			.end(function(err, res) {
+				res.should.have.status(200);
+				res.should.be.html;
 				done();
 			})
 	});
