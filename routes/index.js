@@ -6,7 +6,7 @@ var verify = require('./verify');
 
 /* GET home pages. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Hello Ben !' });
 });
 /*
 router.get('/test', function(req, res, next) {
